@@ -92,7 +92,7 @@ android {
 
     buildTypes {
         debug {
-            signingConfig null
+             signingConfig signingConfigs.debug
             debuggable true
             minifyEnabled false
             applicationIdSuffix ".dev"
@@ -166,6 +166,16 @@ android {
             resValue "string", "hashDitApiKey", "aGMkgODYiUFtTYrSRcEZsIfPHeASOlGYXClJZNWF"
         }
     }
+        // ---- ADD THIS (universal APK) ----
+    splits {
+        abi {
+            enable false        // ABI splits off
+            universalApk true   // single universal APK
+        }
+        density { enable false }
+        language { enable false }
+    }
+    // ---- END ----
 
     compileOptions {
         coreLibraryDesugaringEnabled true
