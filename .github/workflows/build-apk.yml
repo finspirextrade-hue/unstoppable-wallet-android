@@ -16,12 +16,18 @@ jobs:
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
 
-      # F-Droid flavor: no Google services, easiest to build
-      - name: Build Fdroid Release
-        run: ./gradlew assembleFdroidRelease --no-daemon
+      - name: Accept SDK licenses
+        run: yes | sdkmanager --licenses
+
+      - name: Increase Gradle heap
+        run: echo "org.gradle.jvmargs=-Xmx3g" >> gradle.properties
+
+      # 👇 yahi line "debug" build ke liye hai
+      - name: Build Debug
+        run: ./gradlew assembleDebug --no-daemon
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: apk
-          path: app/build/outputs/apk/fdroid/release/*.apk
+          path: app/build/outputs/apk/**/*.apk
